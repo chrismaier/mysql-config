@@ -57,9 +57,9 @@ log-bin 			= /var/log/mysql/binlog/mysql-bin
 
 
 # Salve server options 
-master-host						= 162.242.229.78
-master-connect-retry			= 60
-master-user						= slave_user
+#master-host						= 162.242.229.78
+#master-connect-retry			= 60
+#master-user						= slave_user
 master-password					= yourpassword
 log_slave_updates              = 1                                   # Use if Slave is used for Backup and PiTR
 read_only                      = 1                                   # Set to 1 to prevent writes on Slave

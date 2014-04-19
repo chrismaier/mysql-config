@@ -1,10 +1,10 @@
 http://www.howtoforge.com/how-to-set-up-mysql-database-replication-with-ssl-encryption-on-centos-5.4
 
-mkdir /var/lib/mysql/binlog
-chown mysql: /var/lib/mysql/binlog
+mkdir /var/log/mysql/binlog
+chown mysql: /var/log/mysql/binlog
 
-mkdir /var/lib/mysql/relay
-chown mysql: /var/lib/mysql/relay
+mkdir /var/log/mysql/relay
+chown mysql: /var/log/mysql/relay
 
 mkdir /var/log/mysql
 chown mysql: /var/log/mysql
