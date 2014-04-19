@@ -1,0 +1,108 @@
+[mysqld_safe]
+#log-error=/var/log/mysql/mysqld_safe_error.log
+#pid-file=/var/run/mysqld/mysqld.pid
+#open_files_limit               = 8192		# You possibly have to adapt your O/S settings as well
+
+
+
+
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+user=mysql
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links			=0
+port                           = 3306
+max_allowed_packet             = 16M
+default_storage_engine         = InnoDB		# Defaults since 5.5
+max_connections                = 151		# Values < 1000 are typically good
+max_user_connections           = 50		# Limit one specific user/application
+thread_cache_size              = 151		# Up to max_connections makes sense
+query_cache_type               = 1		# Set to 0 to avoid global QC Mutex
+query_cache_size               = 64M		# Avoid too big (> 128M) QC because of QC clean-up lock!
+sort_buffer_size               = 1M		# Could be too big for many small sorts
+tmp_table_size                 = 32M		# Make sure your temporary results do NOT contain BLOB/TEXT attributes
+
+read_buffer_size               = 128k		# Resist to change this parameter if you do not know what you are doing
+read_rnd_buffer_size           = 256k		# Resist to change this parameter if you do not know what you are doing
+join_buffer_size               = 128k		# Resist to change this parameter if you do not know what you are doing
+log_error                      = /var/log/mysql/mysqld_error.log
+log_warnings                   = 2
+
+
+slow_query_log_file            = /var/log/mysql/mysqld_slow.log
+slow_query_log                 = 1
+log_queries_not_using_indexes  = 1
+long_query_time                = 0.5
+min_examined_row_limit         = 100
+
+
+general_log_file               = /var/log/mysql/mysqld_general.log
+general_log                    = 1
+
+
+server_id                      = 3
+#log_bin                        = mysql-bin
+binlog_cache_size              = 1M
+max_binlog_size                = 128M		# Make bigger for high traffic to reduce number of files
+sync_binlog                    = 2		# Set to 1 or higher to reduce potential loss of binary-log data
+expire_logs_days               = 5		# We will survive easter holidays
+binlog_format                  = ROW		# Use MIXED if you experience some troubles
+binlog-do-db			= tecmint
+relay-log 			= /var/lib/mysql/relay/mysql-relay-bin
+relay-log-index 		= /var/lib/mysql/relay/mysql-relay-bin.index
+log-error 			= /var/log/mysql/mysql.err
+master-info-file 		= /var/lib/mysql/mysql-master.info
+relay-log-info-file 		= /var/lib/mysql/relay/mysql-relay-log.info
+log-bin 			= /var/lib/mysql/binlog/mysql-bin
+
+
+# Salve server options 
+log_slave_updates              = 1                                   # Use if Slave is used for Backup and PiTR
+#read_only                      = 0                                   # Set to 1 to prevent writes on Slave
+#skip_slave_start               = 0                                   # To avoid start of Slave threads
+
+
+
+# Security variables
+
+# local_infile                   = 0                                   # If you are security aware
+# secure_auth                    = 1                                   # If you are security aware
+# sql_mode                       = TRADITIONAL,ONLY_FULL_GROUP_BY      # Be careful changing this afterwards
+# skip_name_resolve              = 0                                   # Set to 1 if you do not trust your DNS or experience problems
+
+
+
+max_heap_table_size            = 64M		# Should be greater or equal to tmp_table_size
+
+
+
+# InnoDB variables
+
+innodb_buffer_pool_size        = 128M		# Go up to 80% of your available RAM
+innodb_file_per_table          = 1		# Is the recommended way nowadays
+# innodb_buffer_pool_instances   = <n>		# Bigger if huge InnoDB Buffer Pool or high concurrency
+# innodb_write_io_threads        = 8		# If you have a strong I/O system or SSD
+# innodb_read_io_threads         = 8		# If you have a strong I/O system or SSD
+# innodb_io_capacity             = 1000		# If you have a strong I/O system or SSD
+innodb_flush_log_at_trx_commit = 1		# 1 for durability, 0 or 2 for performance
+innodb_log_buffer_size         = 16M		# Bigger if innodb_flush_log_at_trx_commit                                    = 0
+innodb_log_file_size           = 256M		# Bigger means more write throughput but longer recovery time
+
+
+
+
+
+
+[mysql]
+
+no_auto_rehash
+max_allowed_packet             = 16M
+prompt                         = '\u@\h [\d]> '
+
+
+
+[mysqldump]
+
+max_allowed_packet             = 16M
+

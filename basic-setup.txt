@@ -1,0 +1,8 @@
+mkdir /var/lib/mysql/binlog
+chown mysql: /var/lib/mysql/binlog
+
+mkdir /var/lib/mysql/relay
+chown mysql: /var/lib/mysql/relay
+
+mkdir /var/log/mysql
+chown mysql: /var/log/mysql
