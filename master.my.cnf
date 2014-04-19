@@ -12,6 +12,7 @@ socket=/var/lib/mysql/mysql.sock
 user=mysql
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links			=0
+bind-address				   = 10.176.168.165
 port                           = 3306
 max_allowed_packet             = 16M
 default_storage_engine         = InnoDB		# Defaults since 5.5
@@ -48,13 +49,12 @@ max_binlog_size                = 128M		# Make bigger for high traffic to reduce 
 sync_binlog                    = 2		# Set to 1 or higher to reduce potential loss of binary-log data
 expire_logs_days               = 5		# We will survive easter holidays
 binlog_format                  = ROW		# Use MIXED if you experience some troubles
-binlog-do-db			= tecmint
-relay-log 			= /var/lib/mysql/relay/mysql-relay-bin
-relay-log-index 		= /var/lib/mysql/relay/mysql-relay-bin.index
+relay-log 			= /var/log/mysql/relay/mysql-relay-bin
+relay-log-index 		= /var/log/mysql/relay/mysql-relay-bin.index
 log-error 			= /var/log/mysql/mysql.err
-master-info-file 		= /var/lib/mysql/mysql-master.info
-relay-log-info-file 		= /var/lib/mysql/relay/mysql-relay-log.info
-log-bin 			= /var/lib/mysql/binlog/mysql-bin
+master-info-file 		= /var/log/mysql/mysql-master.info
+relay-log-info-file 		= /var/log/mysql/relay/mysql-relay-log.info
+log-bin 			= /var/log/mysql/binlog/mysql-bin
 
 
 # Salve server options 

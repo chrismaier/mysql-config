@@ -1,0 +1,5 @@
+-A INPUT -s 10.208.165.38/32 -p tcp -m tcp --dport 3306 -j ACCEPT 
+-A INPUT -s 10.208.168.72/32 -p tcp -m tcp --dport 3306 -j ACCEPT 
+-A INPUT -s 10.176.168.165/32 -p tcp -m tcp --dport 3306 -j ACCEPT 
+-A INPUT -s 10.208.167.125/32 -p tcp -m tcp --dport 3306 -j ACCEPT 
+

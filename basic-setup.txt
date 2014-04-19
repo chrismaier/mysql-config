@@ -1,3 +1,5 @@
+http://www.howtoforge.com/how-to-set-up-mysql-database-replication-with-ssl-encryption-on-centos-5.4
+
 mkdir /var/lib/mysql/binlog
 chown mysql: /var/lib/mysql/binlog
 
@@ -6,3 +8,37 @@ chown mysql: /var/lib/mysql/relay
 
 mkdir /var/log/mysql
 chown mysql: /var/log/mysql
+
+yum install mysql-server -y
+chkconfig mysqld on
+
+
+mysqladmin -u root password 'L!ght3mUp!'
+mysqladmin -u root -p'L!ght3mUp!' password newpass
+UPDATE user SET password=PASSWORD("L!ght3mUp!") WHERE User='root';
+FLUSH PRIVILEGES;
+
+
+# Master Private IP:  10.176.168.165
+# Slave Private IP:   10.208.167.125
+CREATE USER 'repl'@'10.208.167.125' IDENTIFIED BY '0830b2b2-1a87-44b7-8cf0-4e3f32b2d215';
+GRANT REPLICATION SLAVE ON *.* TO 'repl'@'10.208.167.125';
+GRANT USAGE ON *.* TO 'repl'@'%'
+FLUSH TABLES WITH READ LOCK;
+FLUSH PRIVILEGES;
+SHOW MASTER STATUS;
+LOCK TABLES;
+
+mysqldump --lock-all-tables -u root -p --all-databases > /tmp/master-dbdump.db
+
+UNLOCK TABLES;
+
+# copy the file over to the slave 
+
+
+CHANGE MASTER TO
+         MASTER_HOST='10.176.168.165',
+         MASTER_USER='repl',
+         MASTER_PASSWORD='0830b2b2-1a87-44b7-8cf0-4e3f32b2d215',
+         MASTER_LOG_FILE='mysql-bin.000001',
+         MASTER_LOG_POS=2202;

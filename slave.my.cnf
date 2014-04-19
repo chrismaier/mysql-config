@@ -12,6 +12,7 @@ socket=/var/lib/mysql/mysql.sock
 user=mysql
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links			=0
+bind-address				   = 10.208.167.125
 port                           = 3306
 max_allowed_packet             = 16M
 default_storage_engine         = InnoDB		# Defaults since 5.5
@@ -41,25 +42,27 @@ general_log_file               = /var/log/mysql/mysqld_general.log
 general_log                    = 1
 
 
-server_id                      = 3
-#log_bin                        = mysql-bin
+server_id                      = 10
 binlog_cache_size              = 1M
 max_binlog_size                = 128M		# Make bigger for high traffic to reduce number of files
 sync_binlog                    = 2		# Set to 1 or higher to reduce potential loss of binary-log data
 expire_logs_days               = 5		# We will survive easter holidays
 binlog_format                  = ROW		# Use MIXED if you experience some troubles
-binlog-do-db			= tecmint
-relay-log 			= /var/lib/mysql/relay/mysql-relay-bin
-relay-log-index 		= /var/lib/mysql/relay/mysql-relay-bin.index
+relay-log 					= /var/log/mysql/relay/mysql-relay-bin
+relay-log-index 		= /var/log/mysql/relay/mysql-relay-bin.index
 log-error 			= /var/log/mysql/mysql.err
-master-info-file 		= /var/lib/mysql/mysql-master.info
-relay-log-info-file 		= /var/lib/mysql/relay/mysql-relay-log.info
-log-bin 			= /var/lib/mysql/binlog/mysql-bin
+master-info-file 		= /var/log/mysql/mysql-master.info
+relay-log-info-file 		= /var/log/mysql/relay/mysql-relay-log.info
+log-bin 			= /var/log/mysql/binlog/mysql-bin
 
 
 # Salve server options 
+master-host						= 162.242.229.78
+master-connect-retry			= 60
+master-user						= slave_user
+master-password					= yourpassword
 log_slave_updates              = 1                                   # Use if Slave is used for Backup and PiTR
-#read_only                      = 0                                   # Set to 1 to prevent writes on Slave
+read_only                      = 1                                   # Set to 1 to prevent writes on Slave
 #skip_slave_start               = 0                                   # To avoid start of Slave threads
 
 
