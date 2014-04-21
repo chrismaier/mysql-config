@@ -22,23 +22,33 @@ FLUSH PRIVILEGES;
 # Master Private IP:  10.176.168.165
 # Slave Private IP:   10.208.167.125
 CREATE USER 'repl'@'10.208.167.125' IDENTIFIED BY '0830b2b2-1a87-44b7-8cf0-4e3f32b2d215';
+UPDATE user SET password = PASSWORD('4e3f32b2d215') WHERE user = 'repl';
+UPDATE user SET password = PASSWORD('foo') WHERE user = 'repl';
 GRANT REPLICATION SLAVE ON *.* TO 'repl'@'10.208.167.125';
 GRANT USAGE ON *.* TO 'repl'@'%'
+
 FLUSH TABLES WITH READ LOCK;
 FLUSH PRIVILEGES;
 SHOW MASTER STATUS;
 LOCK TABLES;
 
-mysqldump --lock-all-tables -u root -p --all-databases > /tmp/master-dbdump.db
+mysqldump --lock-all-tables -u root -p --all-databases --events > /tmp/master-dbdump.db
+
 
 UNLOCK TABLES;
 
 # copy the file over to the slave 
 
+# On the slave
+mysqldump -u root -p --all-databases < /tmp/master-dbdump.db
+
+
 
 CHANGE MASTER TO
          MASTER_HOST='10.176.168.165',
          MASTER_USER='repl',
-         MASTER_PASSWORD='0830b2b2-1a87-44b7-8cf0-4e3f32b2d215',
+         MASTER_PASSWORD='4e3f32b2d215',
          MASTER_LOG_FILE='mysql-bin.000001',
-         MASTER_LOG_POS=2202;
+         MASTER_LOG_POS=3000;
+
+START SLAVE;
