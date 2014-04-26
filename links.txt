@@ -1,0 +1,11 @@
+# MySQL Links
+
+
+http://www.cyberciti.biz/faq/mysql-change-user-password/
+https://dev.mysql.com/doc/refman/5.0/en/set-password.html
+http://blogs.n1zyy.com/n1zyy/2010/08/29/mysql-replication-permission-denied-errors/
+http://www.clusterdb.com/mysql-cluster/get-mysql-replication-up-and-running-in-5-minutes
+http://stackoverflow.com/questions/8283248/show-mysql-host-via-sql-command
+http://plusbryan.com/mysql-replication-without-downtime
+https://www.digitalocean.com/community/articles/how-to-set-up-master-slave-replication-in-mysql
+http://dev.mysql.com/doc/refman/5.1/en/replication-howto.html
